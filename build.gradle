@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+    id 'antlr'
+    id 'idea'
+}
+
+repositories {
+    mavenCentral()
+    // JCenter is being deprecated, prefer mavenCentral
+}
+
+dependencies {
+    antlr ("org.antlr:antlr4:4.13.1")
+    implementation "org.antlr:antlr4-runtime:4.13.1"
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+generateGrammarSource {
+    maxHeapSize = "128m"
+    arguments += ['-package', 'org.example', '-visitor']
+}
+
+compileJava.dependsOn generateGrammarSource
+
+sourceSets {
+    main {
+        java {
+            srcDirs += 'generated-src/antlr/main'
+        }
+    }
+}
+
+clean {
+    delete "generated-src"
+}
+
+idea {
+    module {
+        sourceDirs += file("generated-src/antlr/main")
+    }
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
