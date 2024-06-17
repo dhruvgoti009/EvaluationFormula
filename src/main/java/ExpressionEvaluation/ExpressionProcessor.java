@@ -14,7 +14,6 @@ public class ExpressionProcessor {
   public List<ValidationError> semanticErrors;
   public Map<String, Node> fieldToValue;
   //  is used for special case of CONCATENATE in which IF condition occur then it's different data type allowed.
-  public String superParent;
 
   public String inValidDataType = "####";
 
@@ -24,7 +23,6 @@ public class ExpressionProcessor {
     this.list = list;
     this.semanticErrors = semanticErrors;
     this.fieldToValue = fieldToValue;
-    this.superParent = "";
 
   }
 
