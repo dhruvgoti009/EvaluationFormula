@@ -2,6 +2,7 @@ package ExpressionEvaluation;
 
 import FormulaGrammar.DivisionAlter;
 import FormulaGrammar.Expression;
+import java.math.BigDecimal;
 import org.example.Node;
 import org.example.ValidationError;
 
@@ -38,25 +39,13 @@ public class DivisionAlterEvaluator implements ExpressionEvaluator {
 
   private boolean isExactZero(String numberStr) {
     // Remove leading zeros
-    String normalizedStr = numberStr.replaceFirst("^0+", "");
+    String trimmedStr = numberStr.trim();
 
-    // If the string is empty after removing leading zeros, it means it was all zeros
-    if (normalizedStr.isEmpty()) {
-      return true;
-    }
+    // Step 2: Create a BigDecimal object
+    BigDecimal bigDecimal = new BigDecimal(trimmedStr);
 
-    // If there's a decimal point, we need to check further
-    if (normalizedStr.contains(".")) {
-      // Remove trailing zeros after the decimal point
-      normalizedStr = normalizedStr.replaceAll("0+$", "");
-      // After removing trailing zeros, if it's just "0.", then it's zero
-      if (normalizedStr.equals("0.")) {
-        return true;
-      }
-    }
-
-    // Check if the normalized string is exactly "0"
-    return normalizedStr.equals("0");
+    // Step 3: Compare with BigDecimal.ZERO
+    return bigDecimal.compareTo(BigDecimal.ZERO) == 0;
   }
 
 }
