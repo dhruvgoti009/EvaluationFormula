@@ -16,7 +16,7 @@ public class ConcatenateTextEvaluator implements ExpressionEvaluator {
       if (t.dataType.equals(processor.inValidDataType)) {
         return new Node("", processor.inValidDataType);
       }
-      result.append(t.value);
+      result.append(t.value + " ");
     }
 
     return new Node(result.toString(), "TEXT");

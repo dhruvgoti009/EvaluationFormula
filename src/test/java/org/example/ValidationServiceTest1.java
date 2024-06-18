@@ -555,4 +555,40 @@ class ValidationServiceTest1 {
     }
   }
 
+  @Test
+  void test17() {
+    Map<String, Node> variable = new HashMap<>();
+    variable.put("A1", new Node("5", "NUMBER"));
+    variable.put("A2", new Node("Hi", "TEXT"));
+    variable.put("A3", new Node("18/06/2024", "DATE"));
+    variable.put("A4", new Node("True", "BOOLEAN"));
+    String input = "SUBSTITUTE(\"Sello\",\"S\",\"H\")";
+    ValidationService obj = new ValidationService();
+    try {
+      List<ValidationError> ans = obj.validation(variable, input);
+      assert !ans.get(0).result.isEmpty();
+
+    } catch (IOException e) {
+      System.out.println("Input/Output Exception");
+    }
+  }
+
+  void print(List<ValidationError> ans) {
+    for (ValidationError i : ans) {
+      if(i.result!=null)
+      {
+        System.out.println(i.result);
+        System.out.println(i.dataType);
+      }
+
+    }
+
+    for (ValidationError i : ans) {
+      if (i.error!=null) {
+        System.out.println(i.error);
+        System.out.println(i.line);
+      }
+    }
+  }
+
 }
